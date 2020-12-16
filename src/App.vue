@@ -221,6 +221,7 @@ export default {
       return false;
     },
     onSubmit() {
+      // Set start & end datetimes based on datepicker and timepicker strings
       if (!updateJob(this.editingJob.id, this.jobs, this.editingjob)) {
         this.jobs.push(this.editingJob);
       }

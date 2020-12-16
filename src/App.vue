@@ -161,6 +161,16 @@
 <script>
 import JobList from "./components/JobList.vue";
 
+function updateJob(id, jobList, job) {
+  for (var i in jobList) {
+     if (jobList[i].id == id) {
+        jobList[i] = job;
+        return true; //Stop this loop, we found it!
+     }
+   }
+   return false;
+}
+
 export default {
   name: "App",
   components: {
@@ -211,8 +221,9 @@ export default {
       return false;
     },
     onSubmit() {
-      
-      return false;
+      if (!updateJob(this.editingJob.id, this.jobs, this.editingjob)) {
+        this.jobs.push(this.editingJob);
+      }
     },
   },
 };

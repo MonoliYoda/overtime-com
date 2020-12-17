@@ -306,8 +306,6 @@ export default {
       return false;
     },
     onSubmit() {
-      console.log("ONSUBMIT");
-      event.preventDefault();
       // 2020-12-16 20:56:00
       // Set start & end datetimes based on datepicker and timepicker strings
       if (this.editingJob.startDate != "" && this.editingJob.startTime != "") {
@@ -321,7 +319,6 @@ export default {
         );
       }
       const index = this.jobs.findIndex((x) => x.id === this.editingJob.id);
-      console.log("INDEX", index);
       if (index == -1) {
         this.jobs.push(this.editingJob);
         // New job

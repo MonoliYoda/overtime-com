@@ -35,11 +35,16 @@ function getHumanTime(millisec) {
 
 export default {
   props: ["job"],
-  emits: ['edit-job'],
+  emits: ["edit-job"],
   computed: {
     jobDate() {
-        const options = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
-        return this.job.startDateTime.toLocaleDateString(undefined, options);
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      };
+      return this.job.startDateTime.toLocaleDateString(undefined, options);
     },
     workTime() {
       const millisec = this.job.endDateTime - this.job.startDateTime;
@@ -52,19 +57,19 @@ export default {
     },
   },
   methods: {
-      editJob(job) {
-          this.$emit('edit-job', job);
-      }
-  }
+    editJob(job) {
+      this.$emit("edit-job", job);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .job-card {
-    background: rgb(252, 239, 221);
-    margin: 1rem;
+  background: rgb(252, 239, 221);
+  margin: 1rem;
 }
 .card-title {
-    background: rgb(238, 222, 199);
+  background: rgb(238, 222, 199);
 }
 </style>

@@ -2,16 +2,17 @@
   <div>
     <div>
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+        <b-navbar-brand href="#">Overtime</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
+          <!--
           <b-navbar-nav>
             <b-nav-item href="#">Link</b-nav-item>
             <b-nav-item href="#" disabled>Disabled</b-nav-item>
           </b-navbar-nav>
-
+-->
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
@@ -24,18 +25,18 @@
                 >Search</b-button
               >
             </b-nav-form>
-
+<!--
             <b-nav-item-dropdown text="Lang" right>
               <b-dropdown-item href="#">EN</b-dropdown-item>
               <b-dropdown-item href="#">ES</b-dropdown-item>
               <b-dropdown-item href="#">RU</b-dropdown-item>
               <b-dropdown-item href="#">FA</b-dropdown-item>
             </b-nav-item-dropdown>
-
+-->
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template #button-content>
-                <em v-if="user">{{user.displayName}}</em>
+                <em v-if="user">{{ user.displayName }}</em>
                 <em v-else>User</em>
               </template>
               <b-dropdown-item href="#" v-if="user">Profile</b-dropdown-item>
@@ -50,7 +51,8 @@
         </b-collapse>
       </b-navbar>
     </div>
-    <job-list :jobs="jobs" @edit-job="editJob($event)"></job-list>
+    <job-list v-if="user" :jobs="jobs" @edit-job="editJob($event)"></job-list>
+    <h1 v-else style="text-align: center;">Please log in ---></h1>
 
     <b-modal id="edit-modal" @ok="onSubmit">
       <b-form @submit="onSubmit" @reset="onReset">
@@ -235,36 +237,7 @@ export default {
   },
   data() {
     return {
-      jobs: [
-        {
-          title: "Vinted",
-          description: "",
-          startDate: "",
-          startTime: "",
-          startDateTime: new Date(2020, 11, 14, 7, 0, 0, 0),
-          endDate: "",
-          endTime: "",
-          endDateTime: new Date(2020, 11, 14, 20, 30, 0, 0),
-          employer: "Dobro",
-          dailyRate: 1000,
-          workdayHours: 11,
-          id: 738264,
-        },
-        {
-          title: "Samsung",
-          description: "Dzien 1 z 4",
-          startDate: "",
-          startTime: "",
-          startDateTime: new Date(2020, 11, 15, 8, 0, 0, 0),
-          endDate: "",
-          endTime: "",
-          endDateTime: new Date(2020, 11, 15, 22, 25, 0, 0),
-          employer: "ONE Production",
-          dailyRate: 1000,
-          workdayHours: 11,
-          id: 873263,
-        },
-      ],
+      jobs: [],
       showEditModal: false,
       editingJob: {},
       settings: {
@@ -272,9 +245,29 @@ export default {
         defaultDayRate: 1000,
       },
       user: null,
+      userData: null,
     };
   },
   methods: {
+    fetchJobs() {
+      // Fetch jobs from DB
+      fb.firestore()
+        .collection("users")
+        .doc(this.user.uid)
+        .collection("jobs")
+        .orderBy("startDateTime", 'desc')
+        .get()
+        .then((col) => {
+          this.jobs = [];
+          col.forEach((doc) => {
+            const data = doc.data();
+            data.startDateTime = data.startDateTime.toDate();
+            data.endDateTime = data.endDateTime.toDate();
+            data.id = doc.id;
+            this.jobs.push(data);
+          });
+        });
+    },
     editJob(job) {
       if (!job.startDateTime) {
         console.log("Not valid object, need to initialize new job.");
@@ -290,7 +283,6 @@ export default {
           employer: "",
           dailyRate: this.settings.defaultDayRate,
           workdayHours: this.settings.defaultWorkHours,
-          id: Math.floor(Math.random() * 9999999),
         };
       }
       console.log(job);
@@ -327,13 +319,61 @@ export default {
       console.log("INDEX", index);
       if (index == -1) {
         this.jobs.push(this.editingJob);
+        // New job
+        fb.firestore()
+          .collection("users")
+          .doc(this.user.uid)
+          .collection("jobs")
+          .add({
+            title: this.editingJob.title,
+            description: this.editingJob.description,
+            startDate: this.editingJob.startDate,
+            startTime: this.editingJob.startTime,
+            startDateTime: firebase.firestore.Timestamp.fromDate(
+              this.editingJob.startDateTime
+            ),
+            endDate: this.editingJob.endDate,
+            endTime: this.editingJob.endTime,
+            endDateTime: firebase.firestore.Timestamp.fromDate(
+              this.editingJob.endDateTime
+            ),
+            employer: this.editingJob.employer,
+            dailyRate: this.editingJob.dailyRate,
+            workdayHours: this.editingJob.workdayHours,
+          })
+          .then((docRef) => {
+            console.log(docRef.id);
+          });
+      } else {
+        // Update job
+        fb.firestore()
+          .collection("users")
+          .doc(this.user.uid)
+          .collection("jobs")
+          .doc(this.editingJob.id)
+          .set({
+            title: this.editingJob.title,
+            description: this.editingJob.description,
+            startDate: this.editingJob.startDate,
+            startTime: this.editingJob.startTime,
+            startDateTime: firebase.firestore.Timestamp.fromDate(
+              this.editingJob.startDateTime
+            ),
+            endDate: this.editingJob.endDate,
+            endTime: this.editingJob.endTime,
+            endDateTime: firebase.firestore.Timestamp.fromDate(
+              this.editingJob.endDateTime
+            ),
+            employer: this.editingJob.employer,
+            dailyRate: this.editingJob.dailyRate,
+            workdayHours: this.editingJob.workdayHours,
+          });
       }
     },
     signIn() {
       fb.auth()
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then((a) => {
-          console.log(a);
+        .then(() => {
           var provider = new firebase.auth.GoogleAuthProvider();
           // In memory persistence will be applied to the signed in Google user
           // even though the persistence was set to 'none' and a page redirect
@@ -342,7 +382,6 @@ export default {
         })
         .then((result) => {
           console.log("User logged in successfully.");
-          console.log(result.user);
           this.user = result.user;
         })
         .catch((error) => {
@@ -362,14 +401,27 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
         this.user = user;
-        // ...
+        fb.firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            this.userData = doc.data();
+            if (!this.userData) {
+              console.log("User doc does not exist. Creating...");
+              fb.firestore().collection("users").doc(user.uid).set({
+                settings: {},
+              });
+            } else {
+              console.log("User doc found. Great success!!!");
+            }
+          })
+          .then(() => {
+            this.fetchJobs();
+          });
       } else {
-        // User is signed out
         this.user = null;
-        // ...
       }
     });
   },

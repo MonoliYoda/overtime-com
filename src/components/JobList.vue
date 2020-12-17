@@ -1,6 +1,6 @@
 <template>
   <div class="col d-flex justify-content-center">
-    <b-card style="max-width: 50rem; min-width: 50rem" class="mb-6">
+    <b-card style="max-width: 50rem; min-width: 20rem" class="mb-6">
       <b-container>
         <b-button-group>
           <b-button @click="editJob">Add job</b-button>

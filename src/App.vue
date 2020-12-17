@@ -1,8 +1,9 @@
 <template>
   <div>
     <job-list :jobs="jobs" @edit-job="editJob($event)"></job-list>
-    <b-modal id="edit-modal">
-      <b-form @submit.prevent="onSubmit" @reset="onReset">
+
+    <b-modal id="edit-modal" @ok="onSubmit">
+      <b-form @submit="onSubmit" @reset="onReset">
         <b-container>
           <!---->
           <b-row>
@@ -131,6 +132,12 @@
                 <b-form-datepicker
                   id="input-2"
                   v-model="editingJob.endDate"
+                  :date-format-options="{
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit',
+                    weekday: 'short',
+                  }"
                   type="text"
                   required
                 ></b-form-datepicker>
@@ -153,23 +160,12 @@
           </b-row>
         </b-container>
       </b-form>
-      {{ editingJob }}
     </b-modal>
   </div>
 </template>
 
 <script>
 import JobList from "./components/JobList.vue";
-
-function updateJob(id, jobList, job) {
-  for (var i in jobList) {
-     if (jobList[i].id == id) {
-        jobList[i] = job;
-        return true; //Stop this loop, we found it!
-     }
-   }
-   return false;
-}
 
 export default {
   name: "App",
@@ -214,6 +210,52 @@ export default {
   },
   methods: {
     editJob(job) {
+      if (!job.startDateTime) {
+        console.log('Not valid object, need to initialize new job.');
+        job = {
+          title: "",
+          description: "",
+          startDate: "",
+          startTime: "",
+          startDateTime: new Date(),
+          endDate: "",
+          endTime: "",
+          endDateTime: new Date(),
+          employer: "",
+          dailyRate: 1000,
+          workdayHours: 11,
+          id: Math.floor(Math.random() * 9999999),
+        }
+      }
+      console.log(job);
+      if (job.startDateTime) {
+        job.startDate =
+          job.startDateTime.getFullYear() +
+          "-" +
+          (job.startDateTime.getMonth() + 1) +
+          "-" +
+          job.startDateTime.getDate();
+        job.startTime =
+          job.startDateTime.getHours() +
+          ":" +
+          job.startDateTime.getMinutes() +
+          ":" +
+          job.startDateTime.getSeconds();
+      }
+      if (job.endDateTime) {
+        job.endDate =
+          job.endDateTime.getFullYear() +
+          "-" +
+          (job.endDateTime.getMonth() + 1) +
+          "-" +
+          job.endDateTime.getDate();
+        job.endTime =
+          job.endDateTime.getHours() +
+          ":" +
+          job.endDateTime.getMinutes() +
+          ":" +
+          job.endDateTime.getSeconds();
+      }
       this.editingJob = job;
       this.$bvModal.show("edit-modal");
     },
@@ -221,8 +263,23 @@ export default {
       return false;
     },
     onSubmit() {
+      console.log("ONSUBMIT");
+      event.preventDefault();
+      // 2020-12-16 20:56:00
       // Set start & end datetimes based on datepicker and timepicker strings
-      if (!updateJob(this.editingJob.id, this.jobs, this.editingjob)) {
+      if (this.editingJob.startDate != "" && this.editingJob.startTime != "") {
+        this.editingJob.startDateTime = new Date(
+          this.editingJob.startDate + " " + this.editingJob.startTime
+        );
+      }
+      if (this.editingJob.endDate != "" && this.editingJob.endTime != "") {
+        this.editingJob.endDateTime = new Date(
+          this.editingJob.endDate + " " + this.editingJob.endTime
+        );
+      }
+      const index = this.jobs.findIndex((x) => x.id === this.editingJob.id);
+      console.log("INDEX", index);
+      if (index == -1) {
         this.jobs.push(this.editingJob);
       }
     },

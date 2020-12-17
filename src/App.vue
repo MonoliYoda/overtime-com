@@ -142,12 +142,12 @@
           <b-row>
             <b-col>
               <b-form-group
-                id="input-group-2"
+                id="input-group-startdate"
                 label="Start date:"
-                label-for="input-2"
+                label-for="input-startdate"
               >
                 <b-form-datepicker
-                  id="input-2"
+                  id="input-startdate"
                   v-model="editingJob.startDate"
                   :date-format-options="{
                     year: 'numeric',
@@ -161,14 +161,14 @@
             </b-col>
             <b-col>
               <b-form-group
-                id="input-group-2"
+                id="input-group-starttime"
                 label="Start time:"
-                label-for="input-2"
+                label-for="input-starttime"
               >
                 <b-form-timepicker
-                  id="input-2"
+                  id="input-starttime"
                   v-model="editingJob.startTime"
-                  type="text"
+                  now-button
                   required
                 ></b-form-timepicker>
               </b-form-group>
@@ -177,12 +177,12 @@
           <b-row>
             <b-col>
               <b-form-group
-                id="input-group-2"
+                id="input-group-enddate"
                 label="End date:"
-                label-for="input-2"
+                label-for="input-enddate"
               >
                 <b-form-datepicker
-                  id="input-2"
+                  id="input-enddate"
                   v-model="editingJob.endDate"
                   :date-format-options="{
                     year: 'numeric',
@@ -197,14 +197,14 @@
             </b-col>
             <b-col>
               <b-form-group
-                id="input-group-2"
+                id="input-group-endtime"
                 label="End time:"
-                label-for="input-2"
+                label-for="input-endtime"
               >
                 <b-form-timepicker
-                  id="input-2"
+                  id="input-endtime"
                   v-model="editingJob.endTime"
-                  type="text"
+                  now-button
                   required
                 ></b-form-timepicker>
               </b-form-group>

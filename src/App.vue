@@ -1,5 +1,55 @@
 <template>
   <div>
+    <div>
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item href="#">Link</b-nav-item>
+            <b-nav-item href="#" disabled>Disabled</b-nav-item>
+          </b-navbar-nav>
+
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            <b-nav-form>
+              <b-form-input
+                size="sm"
+                class="mr-sm-2"
+                placeholder="Search"
+              ></b-form-input>
+              <b-button size="sm" class="my-2 my-sm-0" type="submit"
+                >Search</b-button
+              >
+            </b-nav-form>
+
+            <b-nav-item-dropdown text="Lang" right>
+              <b-dropdown-item href="#">EN</b-dropdown-item>
+              <b-dropdown-item href="#">ES</b-dropdown-item>
+              <b-dropdown-item href="#">RU</b-dropdown-item>
+              <b-dropdown-item href="#">FA</b-dropdown-item>
+            </b-nav-item-dropdown>
+
+            <b-nav-item-dropdown right>
+              <!-- Using 'button-content' slot -->
+              <template #button-content>
+                <em v-if="user">{{user.displayName}}</em>
+                <em v-else>User</em>
+              </template>
+              <b-dropdown-item href="#" v-if="user">Profile</b-dropdown-item>
+              <b-dropdown-item href="#" v-if="user" @click="signOut"
+                >Sign Out</b-dropdown-item
+              >
+              <b-dropdown-item href="#" v-else @click="signIn"
+                >Sign In</b-dropdown-item
+              >
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+    </div>
     <job-list :jobs="jobs" @edit-job="editJob($event)"></job-list>
 
     <b-modal id="edit-modal" @ok="onSubmit">
@@ -166,6 +216,17 @@
 
 <script>
 import JobList from "./components/JobList.vue";
+import fb from "./firebase/firebaseInit";
+import firebase from "firebase";
+
+function strDate(date) {
+  return (
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+  );
+}
+function strTime(date) {
+  return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+}
 
 export default {
   name: "App",
@@ -206,12 +267,17 @@ export default {
       ],
       showEditModal: false,
       editingJob: {},
+      settings: {
+        defaultWorkHours: 11,
+        defaultDayRate: 1000,
+      },
+      user: null,
     };
   },
   methods: {
     editJob(job) {
       if (!job.startDateTime) {
-        console.log('Not valid object, need to initialize new job.');
+        console.log("Not valid object, need to initialize new job.");
         job = {
           title: "",
           description: "",
@@ -222,39 +288,19 @@ export default {
           endTime: "",
           endDateTime: new Date(),
           employer: "",
-          dailyRate: 1000,
-          workdayHours: 11,
+          dailyRate: this.settings.defaultDayRate,
+          workdayHours: this.settings.defaultWorkHours,
           id: Math.floor(Math.random() * 9999999),
-        }
+        };
       }
       console.log(job);
       if (job.startDateTime) {
-        job.startDate =
-          job.startDateTime.getFullYear() +
-          "-" +
-          (job.startDateTime.getMonth() + 1) +
-          "-" +
-          job.startDateTime.getDate();
-        job.startTime =
-          job.startDateTime.getHours() +
-          ":" +
-          job.startDateTime.getMinutes() +
-          ":" +
-          job.startDateTime.getSeconds();
+        job.startDate = strDate(job.startDateTime);
+        job.startTime = strTime(job.startDateTime);
       }
       if (job.endDateTime) {
-        job.endDate =
-          job.endDateTime.getFullYear() +
-          "-" +
-          (job.endDateTime.getMonth() + 1) +
-          "-" +
-          job.endDateTime.getDate();
-        job.endTime =
-          job.endDateTime.getHours() +
-          ":" +
-          job.endDateTime.getMinutes() +
-          ":" +
-          job.endDateTime.getSeconds();
+        job.endDate = strDate(job.endDateTime);
+        job.endTime = strTime(job.endDateTime);
       }
       this.editingJob = job;
       this.$bvModal.show("edit-modal");
@@ -283,6 +329,49 @@ export default {
         this.jobs.push(this.editingJob);
       }
     },
+    signIn() {
+      fb.auth()
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then((a) => {
+          console.log(a);
+          var provider = new firebase.auth.GoogleAuthProvider();
+          // In memory persistence will be applied to the signed in Google user
+          // even though the persistence was set to 'none' and a page redirect
+          // occurred.
+          return firebase.auth().signInWithPopup(provider);
+        })
+        .then((result) => {
+          console.log("User logged in successfully.");
+          console.log(result.user);
+          this.user = result.user;
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+          console.log(errorCode);
+          console.log(errorMessage);
+        });
+    },
+    signOut() {
+      console.log("Signing out...");
+      fb.auth().signOut();
+    },
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        this.user = user;
+        // ...
+      } else {
+        // User is signed out
+        this.user = null;
+        // ...
+      }
+    });
   },
 };
 </script>

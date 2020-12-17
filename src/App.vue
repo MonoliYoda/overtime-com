@@ -220,6 +220,9 @@
 import JobList from "./components/JobList.vue";
 import fb from "./firebase/firebaseInit";
 import firebase from "firebase";
+const dbUsers = fb.firestore().collection('users');
+const auth = fb.auth();
+
 
 function strDate(date) {
   return (
@@ -232,6 +235,9 @@ function strTime(date) {
 
 export default {
   name: "App",
+  provide: {
+    fb: fb,
+  },
   components: {
     JobList,
   },
@@ -251,8 +257,7 @@ export default {
   methods: {
     fetchJobs() {
       // Fetch jobs from DB
-      fb.firestore()
-        .collection("users")
+      dbUsers
         .doc(this.user.uid)
         .collection("jobs")
         .orderBy("startDateTime", 'desc')
@@ -320,8 +325,7 @@ export default {
       if (index == -1) {
         this.jobs.push(this.editingJob);
         // New job
-        fb.firestore()
-          .collection("users")
+        dbUsers
           .doc(this.user.uid)
           .collection("jobs")
           .add({
@@ -346,8 +350,7 @@ export default {
           });
       } else {
         // Update job
-        fb.firestore()
-          .collection("users")
+        dbUsers
           .doc(this.user.uid)
           .collection("jobs")
           .doc(this.editingJob.id)
@@ -371,7 +374,7 @@ export default {
       }
     },
     signIn() {
-      fb.auth()
+      auth
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
           var provider = new firebase.auth.GoogleAuthProvider();
@@ -395,22 +398,21 @@ export default {
     },
     signOut() {
       console.log("Signing out...");
-      fb.auth().signOut();
+      auth.signOut();
     },
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
-        fb.firestore()
-          .collection("users")
+        dbUsers
           .doc(user.uid)
           .get()
           .then((doc) => {
             this.userData = doc.data();
             if (!this.userData) {
               console.log("User doc does not exist. Creating...");
-              fb.firestore().collection("users").doc(user.uid).set({
+              dbUsers.doc(user.uid).set({
                 settings: {},
               });
             } else {

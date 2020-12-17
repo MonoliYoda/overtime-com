@@ -52,7 +52,7 @@ export default {
     },
     overTime() {
       const overMillisec =
-        this.job.endDateTime - this.job.startDateTime - 11 * 60 * 60 * 1000;
+        this.job.endDateTime - this.job.startDateTime - this.job.workdayHours * 60 * 60 * 1000;
       return "Overtime: " + getHumanTime(overMillisec);
     },
   },

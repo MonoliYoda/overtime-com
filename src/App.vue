@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="bg-div">
     <div>
-      <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar toggleable="lg" type="dark">
         <b-navbar-brand href="#">Overtime</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -25,7 +25,7 @@
                 >Search</b-button
               >
             </b-nav-form>
-<!--
+            <!--
             <b-nav-item-dropdown text="Lang" right>
               <b-dropdown-item href="#">EN</b-dropdown-item>
               <b-dropdown-item href="#">ES</b-dropdown-item>
@@ -52,7 +52,7 @@
       </b-navbar>
     </div>
     <job-list v-if="user" :jobs="jobs" @edit-job="editJob($event)"></job-list>
-    <h1 v-else style="text-align: center;">Please log in ---></h1>
+    <h1 v-else style="text-align: center">Please log in ---></h1>
 
     <b-modal id="edit-modal" @ok="onSubmit">
       <b-form @submit="onSubmit" @reset="onReset">
@@ -64,7 +64,7 @@
                 id="input-group-1"
                 label="Project name:"
                 label-for="input-1"
-                description="Title of the movie of commercial."
+                description="Title of the movie or commercial."
               >
                 <b-form-input
                   id="input-1"
@@ -155,6 +155,7 @@
                     day: '2-digit',
                     weekday: 'short',
                   }"
+                  start-weekday="Monday"
                   required
                 ></b-form-datepicker>
               </b-form-group>
@@ -190,6 +191,7 @@
                     day: '2-digit',
                     weekday: 'short',
                   }"
+                  start-weekday="Monday"
                   type="text"
                   required
                 ></b-form-datepicker>
@@ -220,9 +222,8 @@
 import JobList from "./components/JobList.vue";
 import fb from "./firebase/firebaseInit";
 import firebase from "firebase";
-const dbUsers = fb.firestore().collection('users');
+const dbUsers = fb.firestore().collection("users");
 const auth = fb.auth();
-
 
 function strDate(date) {
   return (
@@ -244,6 +245,7 @@ export default {
   data() {
     return {
       jobs: [],
+      activeJobs: [],
       showEditModal: false,
       editingJob: {},
       settings: {
@@ -260,7 +262,7 @@ export default {
       dbUsers
         .doc(this.user.uid)
         .collection("jobs")
-        .orderBy("startDateTime", 'desc')
+        .orderBy("startDateTime", "desc")
         .get()
         .then((col) => {
           this.jobs = [];
@@ -270,6 +272,20 @@ export default {
             data.endDateTime = data.endDateTime.toDate();
             data.id = doc.id;
             this.jobs.push(data);
+          });
+        });
+      dbUsers
+        .doc(this.user.uid)
+        .collection("jobs")
+        .where("endDateTime", "==", null)
+        .get()
+        .then((col) => {
+          this.activeJobs = [];
+          col.forEach((doc) => {
+            const data = doc.data();
+            data.startDateTime = data.startDateTime.toDate();
+            data.id = doc.id;
+            this.activeJobs.push(data);
           });
         });
     },
@@ -427,7 +443,36 @@ export default {
 };
 </script>
 
-<style>
+<style lang="css">
+:root {
+  /* Colors: */
+  --active-button-color: #7b848d;
+  --inactive-button-color: #3f4b59;
+  --headline-color: #031926;
+  --list-color: #252d40;
+  --text-color: #d2d5da;
+  --buttoncolor: #0d4459;
+  --background-color: #141a26;
+  --navbar-color: #010d0d;
+
+  /* Font/text values */
+  --unnamed-font-family-degular-display: Degular Display;
+  --unnamed-font-family-kallisto: Kallisto;
+  --unnamed-font-style-normal: normal;
+  --unnamed-font-weight-bold: bold;
+  --unnamed-font-weight-medium: medium;
+  --unnamed-font-size-24: 24px;
+  --unnamed-font-size-45: 45px;
+  --unnamed-font-size-52: 52px;
+  --unnamed-character-spacing-0: 0px;
+  --unnamed-character-spacing-0-72: 0.72px;
+  --unnamed-character-spacing-5-2: 5.2px;
+  --unnamed-character-spacing-2-25: 2.25px;
+  --unnamed-line-spacing-29: 29px;
+  --unnamed-line-spacing-32: 32px;
+  --unnamed-line-spacing-54: 54px;
+  --unnamed-line-spacing-69: 69px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -441,6 +486,36 @@ body {
   background-color: rgb(40, 40, 40);
 }
 html {
-  height: 100%;
+  min-height: 100%;
+}
+.bg-div {
+  background-color: var(--background-color);
+  height: 100vh;
+}
+.navbar {
+  width: 100%;
+  height: 88px;
+  background: #010d0d 0% 0% no-repeat padding-box;
+  opacity: 1;
+  font-family: var(--unnamed-font-family-degular-display);
+  font-style: var(--unnamed-font-style-normal);
+  font-weight: var(--unnamed-font-weight-bold);
+  font-size: var(--unnamed-font-size-52);
+  line-height: var(--unnamed-line-spacing-69);
+  letter-spacing: var(--unnamed-character-spacing-5-2);
+  color: var(--unnamed-color-d2d5da);
+}
+.navbar-brand {
+  font-family: var(--unnamed-font-family-degular-display);
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold)
+    var(--unnamed-font-size-52) / var(--unnamed-line-spacing-69)
+    var(--unnamed-font-family-degular-display);
+  letter-spacing: var(--unnamed-character-spacing-5-2);
+  color: var(--text-color);
+  text-align: left;
+  font: normal normal bold 52px/69px Degular Display;
+  letter-spacing: 5.2px;
+  color: #d2d5da;
+  opacity: 1;
 }
 </style>

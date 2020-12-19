@@ -12,6 +12,8 @@
     "bootstrap-vue": "^2.21.0",
     "core-js": "^3.6.5",
     "firebase": "^8.2.0",
+    "jspdf": "^2.2.0",
+    "jspdf-autotable": "^3.5.13",
     "sass-loader": "^10.1.0",
     "vue": "^2.6.11"
   },

@@ -9,7 +9,7 @@
                 id="input-group-1"
                 label="Project name:"
                 label-for="input-1"
-                description="Title of the movie of commercial."
+                description="Title of the movie or commercial."
               >
                 <b-form-input
                   id="input-1"
@@ -166,7 +166,7 @@ export default {
     inject: ['fb'],
     data() {
         return {
-            editingJob: {},
+            editingJob: newJob,
 
         }
     },

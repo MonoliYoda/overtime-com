@@ -1,23 +1,25 @@
 <template>
   <div>
     <!-- NavBar -->
-    <NavBar/>
-    <!-- Opt: ActiveJob -->
-    <router-view name="activejob"></router-view>
-    <!-- JobList -->
-    <router-view></router-view>
+    <NavBar />
+    <div class="content">
+      <!-- Opt: ActiveJob -->
+      <router-view name="activejob"></router-view>
+      <!-- JobList -->
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar'
+import NavBar from "./components/NavBar";
 import fb from "./firebase/firebaseInit";
 const dbUsers = fb.firestore().collection("users");
 const auth = fb.auth();
 
 export default {
   name: "App",
-  components: {NavBar},
+  components: { NavBar },
   created() {
     auth.onAuthStateChanged((user) => {
       if (user) {

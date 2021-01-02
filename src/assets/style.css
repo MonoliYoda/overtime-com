@@ -1,42 +1,73 @@
 .job-card {
-    background-color: rgb(53, 53, 53);
+    background-color: #252d40;
+    margin: 2rem;
 }
 
-html, body {
+
+/* Background */
+
+html,
+body {
     box-sizing: border-box;
     height: 100%;
-    padding: 10px;
-    background-color: rgb(82, 82, 82);
+    margin: 0;
+    background-color: #141a26;
 }
 
-.navbar > div {
+
+/* NavBar */
+
+.navbar>div {
     padding: 10px;
     text-align: center;
     font-size: 2em;
     color: #000000;
-    
-
 }
 
-.navbar > div:nth-child(1) {
+.navbar>div:nth-child(1) {
     background-color: #a5a5a5;
 }
-.navbar > div:nth-child(2) {
+
+.navbar>div:nth-child(2) {
     background-color: #797878;
 }
 
-.navbar > div:nth-child(3) {
+.navbar>div:nth-child(3) {
     background-color: #a5a5a5;
 }
 
-
-
 .navbar {
-    border: 5px solid #eeeeee;
+    background-color: black;
     display: flex;
     justify-content: flex-end;
-
 }
+
 .logo {
     margin-right: auto;
+}
+
+
+/*add job button */
+
+.content {
+    background-color: #141a26;
+}
+
+.add-job-space {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.add-job-button {
+    background-color: #0d4459;
+    display: flex;
+    margin: 2rem;
+    width: 220px;
+    height: 121px;
+    box-shadow: 16px 16px 15px #00000066;
+    border-radius: 10px;
+    border: none;
+    justify-content: center;
+    align-items: center;
 }

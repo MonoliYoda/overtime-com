@@ -2,7 +2,12 @@
   <div>
     <!-- NavBar -->
     <NavBar />
+    <!-- AddJobButton -->
     <div class="content">
+      <div class="add-job-space">
+      <button class="add-job-button">Add Job</button>
+      </div>
+      
       <!-- Opt: ActiveJob -->
       <router-view name="activejob"></router-view>
       <!-- JobList -->

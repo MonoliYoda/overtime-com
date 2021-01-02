@@ -46,6 +46,9 @@ const store = createStore({
     jobs(state) {
       return state.jobs;
     },
+    activeJobs(state) {
+      return state.activeJobs;
+    },
     user(state) {
       return state.user;
     },

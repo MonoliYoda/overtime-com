@@ -1,8 +1,10 @@
 <template>
-    <div class="navbar">
-    
+    <nav class="navbar">
+        <div class="logo">Logo</div>
+        <div class="search">Search</div>
+        <div class="logout">Logout</div>
 
-    </div>
+    </nav>
 </template>
 
 <script>

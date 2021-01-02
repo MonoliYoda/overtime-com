@@ -2,19 +2,19 @@
   <div>
     <div class="job-card">
       <div class="job-title">
-        <h4 class="job-title">{{job.title}} - {{job.employer}}</h4>
+        <h4 class="job-title">{{ job.title }} - {{ job.employer }}</h4>
       </div>
       <div class="job-details">
-        <h6 class="job-date">{{job.startDateTime}}</h6>
-        <p class="job-desctiption">Dzien 12 z 24</p>
+        <h6 class="job-date">{{ job.startDateTime }}</h6>
+        <p class="job-desctiption">{{ job.description }}</p>
       </div>
       <div class="job-times">
-        <p>Work time: 15:40</p>
-        <p>Overtime: 04:40</p>
+        <p>{{ workTime }}</p>
+        <p>{{ overTime }}</p>
       </div>
       <div class="job-overtimes">
-        <p>Overtime pct: 100%</p>
-        <p>Overtime pay: 1600zl</p>
+        <p>Overtime pct: {{ ovtPct }}%</p>
+        <p>Overtime pay: {{ ovtPay }}</p>
       </div>
       <div class="job-edit">
         <button class="job-edit-button">Edit</button>
@@ -24,11 +24,82 @@
 </template>
 
 <script>
-export default {
-    props: ['job'],
-    created() {
-      console.log(this.job)
-    }
-
+function getHumanTime(millisec) {
+  var seconds = (millisec / 1000).toFixed(0);
+  var minutes = Math.floor(seconds / 60);
+  var hours = "";
+  if (minutes > 59) {
+    hours = Math.floor(minutes / 60);
+    hours = hours >= 10 ? hours : "0" + hours;
+    minutes = minutes - hours * 60;
+    minutes = minutes >= 10 ? minutes : "0" + minutes;
+  }
+  return hours + ":" + minutes;
 }
+export default {
+  props: ["job"],
+  computed: {
+    jobDate() {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+      };
+      return this.job.startDateTime.toLocaleDateString(undefined, options);
+    },
+    workTime() {
+      const millisec = this.job.endDateTime - this.job.startDateTime;
+      return "Work time: " + getHumanTime(millisec);
+    },
+    overTime() {
+      if (this.ovtMillisec < 60 * 1000) {
+        return "No overtime.";
+      } else {
+        return "Overtime: " + getHumanTime(this.ovtMillisec);
+      }
+    },
+    ovtMillisec() {
+      return (
+        this.job.endDateTime -
+        this.job.startDateTime -
+        this.job.workdayHours * 60 * 60 * 1000
+      );
+    },
+    ovtMinutes() {
+      const minutes = Math.floor((this.ovtMillisec / 1000).toFixed(0) / 60);
+      return minutes - this.ovtHours * 60;
+    },
+    ovtHours() {
+      const minutes = Math.floor((this.ovtMillisec / 1000).toFixed(0) / 60);
+      if (minutes > 59) {
+        return Math.floor(minutes / 60);
+      } else {
+        return 0;
+      }
+    },
+    ovtPct() {
+      var pct = 0;
+      const overtimeArray = [15, 15, 20, 20, 30, 50];
+      var hours = this.ovtHours;
+      if (this.ovtMinutes >= 15) {
+        hours += 1;
+      }
+      for (let step = 0; step < hours; step++) {
+        if (step > 5) {
+          pct += 50;
+        } else {
+          pct += overtimeArray[step];
+        }
+      }
+      return pct;
+    },
+    ovtPay() {
+      return new Intl.NumberFormat("pl-PL", {
+        style: "currency",
+        currency: "PLN",
+      }).format(this.job.dailyRate * (this.ovtPct / 100));
+    },
+  },
+};
 </script>

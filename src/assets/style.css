@@ -34,14 +34,9 @@ html, body {
 .navbar {
     border: 5px solid #eeeeee;
     display: flex;
-    height: 100%;
+    justify-content: flex-end;
 
 }
-
-
-
-
 .logo {
-flex: 2
-
+    margin-right: auto;
 }

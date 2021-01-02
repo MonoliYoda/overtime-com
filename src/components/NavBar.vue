@@ -4,6 +4,7 @@
         <div class="search">Search</div>
         <div class="logout">Logout</div>
 
+
     </nav>
 </template>
 

@@ -3,8 +3,10 @@
 }
 
 html, body {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
     background-color: rgb(82, 82, 82);
-    margin: 10px;
 }
 
 .navbar > div {
@@ -29,15 +31,17 @@ html, body {
 
 
 
-
 .navbar {
     border: 5px solid #eeeeee;
     display: flex;
-    justify-content: flex-end;
+    height: 100%;
 
 }
 
+
+
+
 .logo {
-    margin-right: auto;
+flex: 2
 
 }

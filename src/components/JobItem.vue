@@ -2,10 +2,10 @@
   <div>
     <div class="job-card">
       <div class="job-title">
-        <h4 class="job-title">job-title</h4>
+        <h4 class="job-title">{{job.title}} - {{job.employer}}</h4>
       </div>
       <div class="job-details">
-        <h6 class="job-date">24-12-2020</h6>
+        <h6 class="job-date">{{job.startDateTime}}</h6>
         <p class="job-desctiption">Dzien 12 z 24</p>
       </div>
       <div class="job-times">
@@ -25,6 +25,10 @@
 
 <script>
 export default {
-    
+    props: ['job'],
+    created() {
+      console.log(this.job)
+    }
+
 }
 </script>

@@ -23,13 +23,13 @@ export default {
   created() {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.user = user;
+        this.$store.commit('setUser', user);
         dbUsers
           .doc(user.uid)
           .get()
           .then((doc) => {
-            this.userData = doc.data();
-            if (!this.userData) {
+            this.$store.commit('setUserData', doc.data());
+            if (!doc.data()) {
               console.log("User doc does not exist. Creating...");
               dbUsers.doc(user.uid).set({
                 settings: {},
@@ -39,10 +39,10 @@ export default {
             }
           })
           .then(() => {
-            this.fetchJobs();
+            this.$store.dispatch('fetchJobs');
           });
       } else {
-        this.user = null;
+        this.$store.commit('setUser', null);
       }
     });
   },

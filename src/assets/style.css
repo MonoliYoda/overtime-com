@@ -1,3 +1,43 @@
 .job-card {
-    background-color: aqua;
+    background-color: rgb(53, 53, 53);
+}
+
+html, body {
+    background-color: rgb(82, 82, 82);
+    margin: 10px;
+}
+
+.navbar > div {
+    padding: 10px;
+    text-align: center;
+    font-size: 2em;
+    color: #000000;
+    
+
+}
+
+.navbar > div:nth-child(1) {
+    background-color: #a5a5a5;
+}
+.navbar > div:nth-child(2) {
+    background-color: #797878;
+}
+
+.navbar > div:nth-child(3) {
+    background-color: #a5a5a5;
+}
+
+
+
+
+.navbar {
+    border: 5px solid #eeeeee;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.logo {
+    margin-right: auto;
+
 }

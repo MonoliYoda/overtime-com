@@ -1,4 +1,4 @@
-# overtime-frontend
+# overtime-com-2
 
 ## Project setup
 ```

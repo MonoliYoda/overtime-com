@@ -17,7 +17,7 @@
         <p>Overtime pay: {{ ovtPay }}</p>
       </div>
       <div class="job-edit">
-        <button class="job-edit-button">Edit</button>
+        <button class="job-edit-button" @click="createEditModal">Edit</button>
       </div>
     </div>
   </div>
@@ -101,5 +101,11 @@ export default {
       }).format(this.job.dailyRate * (this.ovtPct / 100));
     },
   },
+  methods: {
+    createEditModal() {
+      this.$store.commit('setEditingJob', this.job)
+      this.$store.commit('showEditModal')
+    }
+  }
 };
 </script>

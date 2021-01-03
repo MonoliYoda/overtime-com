@@ -36,7 +36,16 @@ const store = createStore({
       state.user = user;
     },
     setUserData(state, userData) {
-      state.userData = userData
+      state.userData = userData;
+    },
+    showEditModal(state) {
+      state.showEditModal = true
+    },
+    hideEditModal(state) {
+      state.showEditModal = false
+    },
+    setEditingJob(state, job) {
+      state.editingJob = job
     }
   },
   getters: {
@@ -53,7 +62,13 @@ const store = createStore({
       return state.user;
     },
     userData(state) {
-      return state.userData
+      return state.userData;
+    },
+    showEditModal(state) {
+      return state.showEditModal;
+    },
+    editingJob(state) {
+      return state.editingJob
     }
   },
   actions: {
@@ -65,7 +80,7 @@ const store = createStore({
         .orderBy("startDateTime", "desc")
         .get()
         .then((col) => {
-          context.commit('resetJobs')
+          context.commit("resetJobs");
           col.forEach((doc) => {
             const data = doc.data();
             data.startDateTime = data.startDateTime.toDate();
@@ -81,7 +96,7 @@ const store = createStore({
         .where("endDateTime", "==", null)
         .get()
         .then((col) => {
-          context.commit('resetActiveJobs')
+          context.commit("resetActiveJobs");
           col.forEach((doc) => {
             const data = doc.data();
             data.startDateTime = data.startDateTime.toDate();

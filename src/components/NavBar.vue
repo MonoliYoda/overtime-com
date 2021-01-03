@@ -1,15 +1,20 @@
 <template>
-    <nav class="navbar">
-        <div class="logo">Logo</div>
-        <div class="search">Search</div>
-        <div class="logout" @click="onLogin">Logout</div>
-
+    <nav>
+    <ul class="menu">
+        <li class="logo"><a>Overtime</a></li>
+        <li class="item"><input type="text"></li>
+        <li class="item"><a>Search</a></li>
+        <li class="item"><a>Settings</a></li>
+        <li class="item button secondary"><a @click="onLogin">Login</a></li>
+        <li class="toggle"><span class="bars"></span></li>
+    </ul>
 
     </nav>
 </template>
 
 <script>
 import firebase from 'firebase'
+// @click="onLogin"
 
 export default {
     methods: {

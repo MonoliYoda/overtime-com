@@ -4,11 +4,8 @@
     <NavBar />
     <!-- AddJobButton -->
     <div class="content">
-      <button type="button" class="btn" @click="showModal">
-        Open Modal!
-      </button>
       <div class="add-job-space">
-        <button class="add-job-button">Add Job</button>
+        <button class="add-job-button" @click="showModal">Add Job</button>
       </div>
 
       <!-- Opt: ActiveJob -->

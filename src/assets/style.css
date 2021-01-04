@@ -1,198 +1,246 @@
-    /* Fonts stuff*/
-    
-    @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
-    .job-card {
-        background-color: #252d40;
-        margin: 2rem;
-    }
-    /* Background */
-    
-    html,
-    body {
-        box-sizing: border-box;
-        height: 100%;
-        margin: 0;
-        background-color: #141a26;
-        font-family: sans-serif;
-    }
-    
-    .content {
-        background-color: #141a26;
-    }
-    /*add job button*/
-    
-    .add-job-space {
-        justify-content: center;
-        align-items: center;
-        display: flex;
-    }
-    
-    .add-job-button {
-        background-color: #146281;
-        display: flex;
-        margin: 2rem;
-        padding: 12px 28px;
-        box-shadow: 16px 16px 15px #00000066;
-        border-radius: 4px;
-        border: none;
-        opacity: 0.6;
-    }
-    /*NavBar*/
-    
-    * {
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
-    }
-    
-    nav {
-        background: black;
-        padding: 5px 20px;
-    }
-    
-    ul {
-        list-style-type: none;
-    }
-    
-    a {
-        color: white;
-        text-decoration: none;
-    }
-    
-    a:hover {
-        text-decoration: underline;
-    }
-    
-    .menu li {
-        font-size: 16px;
-        padding: 15px 5px;
-    }
-    
-    .menu li a {
-        display: block;
-    }
-    
-    .button.secondary {
-        border-bottom: 1px #444 solid;
-    }
-    /* Mobile Menu */
-    
-    .menu {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .toggle {
-        order: 1;
-    }
-    
-    .item.button {
-        order: 2;
-    }
-    
-    .item {
-        width: 100%;
-        text-align: center;
-        order: 3;
-        display: none;
-    }
-    
-    .item.active {
-        display: block;
-    }
-    /* navbar toggle*/
-    
-    .bars {
-        background: #999999;
-        display: inline-block;
-        height: 2px;
-        position: relative;
-        width: 18px
-    }
-    
-    .bars::before,
-    .bars::after {
-        background: #999999;
-        content: "";
-        display: inline-block;
-        height: 2px;
-        position: absolute;
-        transition: all .2s ease-out;
-        width: 100%;
-    }
-    
-    .bars::before {
-        top: 5px;
-    }
-    
-    .bars::after {
-        top: -5px;
-    }
-    /* Tablet menu */
-    
-    @media all and (min-width:468px) {
-        .menu {
+        /* Fonts stuff*/
+        
+        @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+        /*jobitem*/
+        
+        .job-card-up {
+            background-color: #252d40;
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        
+        .job-card-down {
+            background-color: #252d40;
+            width: 80%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .job-title {
+            background-color: teal;
+        }
+        
+        .job-employer {
+            background-color: aqua;
+        }
+        
+        .job-details {
+            background-color: thistle;
+        }
+        
+        .job-date {
+            background-color: tomato;
+        }
+        
+        .job-description {
+            background-color: violet;
+        }
+        
+        .job-times {
+            background-color: wheat;
+        }
+        
+        .job-overtimes {
+            background-color: yellow;
+        }
+        
+        .job-edit {
+            background-color: yellowgreen;
+        }
+        /* Background */
+        
+        html,
+        body {
+            box-sizing: border-box;
+            height: 100%;
+            margin: 0;
+            background-color: #141a26;
+            font-family: sans-serif;
+        }
+        
+        .content {
+            background-color: #141a26;
+        }
+        /*add job button*/
+        
+        .add-job-space {
             justify-content: center;
+            align-items: center;
+            display: flex;
         }
-        .logo {
-            flex: 1;
+        
+        .add-job-button {
+            background-color: #146281;
+            display: flex;
+            margin: 2rem;
+            padding: 12px 28px;
+            box-shadow: 16px 16px 15px #00000066;
+            border-radius: 4px;
+            border: none;
+            opacity: 0.6;
         }
-        .item.button {
-            width: auto;
-            order: 1;
+        /*NavBar*/
+        
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav {
+            background: black;
+            padding: 5px 20px;
+        }
+        
+        ul {
+            list-style-type: none;
+        }
+        
+        a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .menu li {
+            font-size: 16px;
+            padding: 15px 5px;
+        }
+        
+        .menu li a {
             display: block;
         }
+        
+        .button.secondary {
+            border-bottom: 1px #444 solid;
+        }
+        /* Mobile Menu */
+        
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
         .toggle {
+            order: 1;
+        }
+        
+        .item.button {
             order: 2;
         }
-        .button.secondary {
-            border: 0;
-        }
-        .button a {
-            text-decoration: none;
-            padding: 7px 15px;
-            background: teal;
-            border: 1px solid #006d6d;
-            border-radius: 50em;
-        }
-        .button.secondary a {
-            background: transparent;
-        }
-        .buttona:hover {
-            transition: all .25s;
-        }
-        .button:not(.secondary) a:hover {
-            background: #006d6d;
-            border-color: #005959;
-        }
-        .button.secondary a:hover {
-            color: #ddd
-        }
-    }
-    
-    @media all and (min-width: 768px) {
+        
         .item {
-            display: block;
-            width: auto;
-        }
-        .toggle {
+            width: 100%;
+            text-align: center;
+            order: 3;
             display: none;
         }
-        .logo {
-            order: 0;
+        
+        .item.active {
+            display: block;
         }
-        .item {
-            order: 1;
+        /* navbar toggle*/
+        
+        .bars {
+            background: #999999;
+            display: inline-block;
+            height: 2px;
+            position: relative;
+            width: 18px
         }
-        .buttom {
-            order: 2;
+        
+        .bars::before,
+        .bars::after {
+            background: #999999;
+            content: "";
+            display: inline-block;
+            height: 2px;
+            position: absolute;
+            transition: all .2s ease-out;
+            width: 100%;
         }
-        .menu li {
-            padding: 15px 10px;
+        
+        .bars::before {
+            top: 5px;
         }
-        .menu li.button {
-            padding-right: 0;
+        
+        .bars::after {
+            top: -5px;
         }
-    }
+        /* Tablet menu */
+        
+        @media all and (min-width:468px) {
+            .menu {
+                justify-content: center;
+            }
+            .logo {
+                flex: 1;
+            }
+            .item.button {
+                width: auto;
+                order: 1;
+                display: block;
+            }
+            .toggle {
+                order: 2;
+            }
+            .button.secondary {
+                border: 0;
+            }
+            .button a {
+                text-decoration: none;
+                padding: 7px 15px;
+                background: teal;
+                border: 1px solid #006d6d;
+                border-radius: 50em;
+            }
+            .button.secondary a {
+                background: transparent;
+            }
+            .buttona:hover {
+                transition: all .25s;
+            }
+            .button:not(.secondary) a:hover {
+                background: #006d6d;
+                border-color: #005959;
+            }
+            .button.secondary a:hover {
+                color: #ddd
+            }
+        }
+        
+        @media all and (min-width: 768px) {
+            .item {
+                display: block;
+                width: auto;
+            }
+            .toggle {
+                display: none;
+            }
+            .logo {
+                order: 0;
+            }
+            .item {
+                order: 1;
+            }
+            .buttom {
+                order: 2;
+            }
+            .menu li {
+                padding: 15px 10px;
+            }
+            .menu li.button {
+                padding-right: 0;
+            }
+        }

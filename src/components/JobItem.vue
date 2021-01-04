@@ -5,7 +5,7 @@
         <h4 class="job-title">{{ job.title }} - {{ job.employer }}</h4>
       </div>
       <div class="job-details">
-        <h6 class="job-date">{{ job.startDateTime }}</h6>
+        <h6 class="job-date">{{ jobDate }}</h6>
         <p class="job-desctiption">{{ job.description }}</p>
       </div>
       <div class="job-times">
@@ -46,10 +46,10 @@ export default {
         month: "numeric",
         day: "numeric",
       };
-      return this.job.startDateTime.toLocaleDateString(undefined, options);
+      return this.job.startDate.toLocaleDateString(navigator.languages[0], options);
     },
     workTime() {
-      const millisec = this.job.endDateTime - this.job.startDateTime;
+      const millisec = this.job.endDate - this.job.startDate;
       return "Work time: " + getHumanTime(millisec);
     },
     overTime() {
@@ -61,8 +61,8 @@ export default {
     },
     ovtMillisec() {
       return (
-        this.job.endDateTime -
-        this.job.startDateTime -
+        this.job.endDate -
+        this.job.startDate -
         this.job.workdayHours * 60 * 60 * 1000
       );
     },

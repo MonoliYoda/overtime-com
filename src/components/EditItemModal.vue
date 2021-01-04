@@ -26,36 +26,61 @@
             <form action="">
               <div class="form-control">
                 <label for="name">Project name:</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  :value="editingJob.title || ''"
-                />
+                <input id="name" name="name" type="text" v-model="title" />
               </div>
               <div class="form-control">
                 <label for="employer">Producer:</label>
-                <input id="employer" name="employer" type="text" :value="editingJob.employer || ''"/>
+                <input
+                  id="employer"
+                  name="employer"
+                  type="text"
+                  v-model="employer"
+                />
               </div>
               <div class="form-control">
                 <label for="notes">Notes:</label>
-                <input id="notes" name="notes" type="text" :value="editingJob.description || ''"/>
+                <input
+                  id="notes"
+                  name="notes"
+                  type="text"
+                  v-model="description"
+                />
               </div>
               <div class="form-control">
                 <label for="rate">Daily rate:</label>
-                <input id="rate" name="rate" type="number" :value="editingJob.dailyRate || ''"/>
+                <input
+                  id="rate"
+                  name="rate"
+                  type="number"
+                  v-model="dailyRate"
+                />
               </div>
               <div class="form-control">
                 <label for="hours">Day hours:</label>
-                <input id="hours" name="hours" type="number" :value="editingJob.workdayHours || ''"/>
+                <input
+                  id="hours"
+                  name="hours"
+                  type="number"
+                  v-model="workdayHours"
+                />
               </div>
               <div class="form-control">
                 <label for="startdate">Start date:</label>
-                <input id="startdate" name="startdate" type="datetime-local" :value="editingJob.startDateTime || ''"/>
+                <input
+                  id="startdate"
+                  name="startdate"
+                  type="datetime-local"
+                  v-model="startDate"
+                />
               </div>
               <div class="form-control">
                 <label for="enddate">End date:</label>
-                <input id="enddate" name="enddate" type="datetime-local" />
+                <input
+                  id="enddate"
+                  name="enddate"
+                  type="datetime-local"
+                  v-model="endDate"
+                />
               </div>
             </form>
           </slot>
@@ -92,18 +117,112 @@ export default {
   name: "modal",
   computed: {
     ...mapGetters(["editingJob"]),
+    title: {
+      get() {
+        try {
+          return this.$store.editingJob.title;
+        } catch {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editTitle", val);
+      },
+    },
+    employer: {
+      get() {
+        try {
+          return this.$store.editingJob.employer;
+        } catch (err) {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editEmployer", val);
+      },
+    },
+    description: {
+      get() {
+        try {
+          return this.$store.editingJob.description;
+        } catch (err) {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editDescription", val);
+      },
+    },
+    startDate: {
+      get() {
+        try {
+          return this.$store.editingJob.startDate
+            .toISOString()
+            .substring(0, 16);
+        } catch {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editStartDate", Date.parse(val));
+      },
+    },
+    endDate: {
+      get() {
+        try {
+          return this.$store.editingJob.endDate.toISOString().substring(0, 16);
+        } catch {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editEndDate", Date.parse(val));
+      },
+    },
+    dailyRate: {
+      get() {
+        try {
+          return this.$store.editingJob.dailyRate;
+        } catch (err) {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editRate", val);
+      },
+    },
+    workdayHours: {
+      get() {
+        try {
+          return this.$store.editingJob.workdayHours;
+        } catch (err) {
+          return "";
+        }
+      },
+      set(val) {
+        this.$store.commit("editHours", val);
+      },
+    },
   },
   methods: {
     data() {
       return {};
     },
-
     close() {
       this.$store.commit("hideEditModal");
+      this.$store.commit("setEditingJob", {});
     },
     submit() {
       this.$store.commit("hideEditModal");
-      this.$store.dispatch("submitEdit", this.job);
+      // Validation
+      this.$store.dispatch("editJob", this.job);
+    },
+    strfyDateTime(datetime) {
+      try {
+        return datetime.toISOString().substring(0, 16);
+      } catch {
+        return "";
+      }
     },
   },
 };

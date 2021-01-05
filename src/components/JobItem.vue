@@ -1,8 +1,6 @@
 <template>
-  <div>
+  <div @click="toggleLower">
     <div class="job-card-up">
-      
-
       <div class="job-title">
         <h4>{{ job.title }}</h4>
       </div>
@@ -12,9 +10,8 @@
       <h6 class="job-date">{{ jobDate }}</h6>
     </div>
 
-    <div class=job-card-down>  
+    <div class="job-card-down" :class="{open: lowerOpen}">
       <div class="job-details">
-        
         <p class="job-description">{{ job.description }}</p>
       </div>
       <div class="job-times">
@@ -47,6 +44,11 @@ function getHumanTime(millisec) {
 }
 export default {
   props: ["job"],
+  data() {
+    return {
+      lowerOpen: true, // default state
+    };
+  },
   computed: {
     jobDate() {
       const options = {
@@ -55,7 +57,10 @@ export default {
         month: "numeric",
         day: "numeric",
       };
-      return this.job.startDate.toLocaleDateString(navigator.languages[0], options);
+      return this.job.startDate.toLocaleDateString(
+        navigator.languages[0],
+        options
+      );
     },
     workTime() {
       const millisec = this.job.endDate - this.job.startDate;
@@ -112,9 +117,12 @@ export default {
   },
   methods: {
     createEditModal() {
-      this.$store.commit('setEditingJob', this.job)
-      this.$store.commit('showEditModal')
-    }
-  }
+      this.$store.commit("setEditingJob", this.job);
+      this.$store.commit("showEditModal");
+    },
+    toggleLower() {
+      this.lowerOpen = !this.lowerOpen;
+    },
+  },
 };
 </script>

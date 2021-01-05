@@ -1,33 +1,41 @@
 <template>
   <div>
+    <div class=job-card-space>
     <div class="job-card-up">
-      
-
       <div class="job-title">
         <h4>{{ job.title }}</h4>
       </div>
       <div class="job-employer">
         <h4>{{ job.employer }}</h4>
+      </div >
+      <div class="job-date">
+      <h4>{{ jobDate }}</h4>
+      </div >
+      <div class="job-arrow">
+        <p> <i class="arrow"></i></p>
       </div>
-      <h6 class="job-date">{{ jobDate }}</h6>
     </div>
 
     <div class=job-card-down>  
-      <div class="job-details">
-        
-        <p class="job-description">{{ job.description }}</p>
+      <div class="job-description">
+        <p>{{ job.description }}</p>
       </div>
-      <div class="job-times">
+      <div class="job-time">
         <p>{{ workTime }}</p>
+        </div>
+        <div class="overtime">
         <p>{{ overTime }}</p>
       </div>
-      <div class="job-overtimes">
+      <div class="overtime-pct">
         <p>Overtime pct: {{ ovtPct }}%</p>
+        </div>
+        <div class="overtime-pay">
         <p>Overtime pay: {{ ovtPay }}</p>
       </div>
       <div class="job-edit">
         <button class="job-edit-button" @click="createEditModal">Edit</button>
       </div>
+    </div>
     </div>
   </div>
 </template>

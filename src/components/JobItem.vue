@@ -1,12 +1,21 @@
 <template>
   <div>
-    <div class="job-card">
+    <div class="job-card-up">
+      
+
       <div class="job-title">
-        <h4 class="job-title">{{ job.title }} - {{ job.employer }}</h4>
+        <h4>{{ job.title }}</h4>
       </div>
+      <div class="job-employer">
+        <h4>{{ job.employer }}</h4>
+      </div>
+      <h6 class="job-date">{{ jobDate }}</h6>
+    </div>
+
+    <div class=job-card-down>  
       <div class="job-details">
-        <h6 class="job-date">{{ jobDate }}</h6>
-        <p class="job-desctiption">{{ job.description }}</p>
+        
+        <p class="job-description">{{ job.description }}</p>
       </div>
       <div class="job-times">
         <p>{{ workTime }}</p>

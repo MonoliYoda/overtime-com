@@ -27,6 +27,9 @@ const store = createStore({
     resetJobs(state) {
       state.jobs = [];
     },
+    setJobs(state, jobs){
+      state.jobs = jobs
+    },
     resetActiveJobs(state) {
       state.activeJobs = [];
     },
@@ -129,23 +132,41 @@ const store = createStore({
         .doc(context.getters.user.uid)
         .collection("jobs")
         .doc(jobID)
-        .set(job);
+        .set(job).then(() => {
+          job.startDate = job.startDate.toDate();
+          job.endDate = job.endDate.toDate();
+          const jobs = [...context.getters.jobs]
+          const idx = jobs.findIndex((job) => job.id == jobID)
+          job.id = jobID
+          jobs[idx] = job
+          context.commit('setJobs', jobs)
+        });
       } else {
         // New job
         dbUsers
         .doc(context.getters.user.uid)
         .collection("jobs")
-        .add(job);
+        .add(job).then(docRef => {
+          job.startDate = job.startDate.toDate();
+          job.endDate = job.endDate.toDate();
+          job.id = docRef.id
+          context.commit('pushJob', job)
+        });
       }
       console.log('Job submitted');
       //this.$bvModal.show("edit-modal");
     },
     deleteJob(context, id) {
+      console.log('Deleting', context.getters.user.uid, id)
       dbUsers
       .doc(context.getters.user.uid)
       .collection("jobs")
       .doc(id)
-      .delete();
+      .delete().then(() => {
+        const jobs = [...context.getters.jobs]
+        const idx = jobs.findIndex((job) => job.id == id)
+        context.commit('setJobs', jobs.splice(idx, 1))
+      });
     }
   },
 });

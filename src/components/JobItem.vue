@@ -33,7 +33,7 @@
       </div>
       <div class="job-edit">
         <button class="job-edit-button" @click="createEditModal">Edit</button>
-        <button class="job-edit-button" @click="cdeleteJob">Delete</button>
+        <button class="job-edit-button" @click="deleteJob">Delete</button>
       </div>
     </div>
   </div>

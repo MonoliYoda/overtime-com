@@ -13,6 +13,9 @@
             
             .job-card-up {
                 background-color: #252d40;
+                border-style: solid;
+                border-color: brown;
+                border-width: 2px;
                 margin-left: 2em;
                 margin-right: 2em;
                 display: flex;
@@ -35,7 +38,11 @@
                 max-height: 0px;
                 transition: 1s;
                 visibility: hidden;
+                border-style: solid;
+                border-color: brown;
+                border-width: 2px;
             }
+            
             .open {
                 max-height: 50px;
                 transition: 1s;

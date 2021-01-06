@@ -21,7 +21,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: 5px 20px;
+                padding: 10px;
                 justify-content: space-around;
                 flex-basis: auto;
             }
@@ -35,6 +35,7 @@
                 flex-direction: row;
                 justify-content: space-around;
                 align-items: center;
+                padding: 10px;
                 max-height: 0px;
                 transition: 1s;
                 visibility: hidden;
@@ -49,9 +50,7 @@
                 visibility: visible;
             }
             
-            .job-arrow {
-                order: 3;
-            }
+            .job-arrow {}
             
             .arrow {
                 border: solid beige;
@@ -64,13 +63,11 @@
             
             .job-title {
                 color: beige;
-                flex: 1;
             }
             
             .job-employer {
                 color: beige;
                 width: auto;
-                order: 1;
             }
             
             .job-details {
@@ -79,12 +76,10 @@
             
             .job-date {
                 color: beige;
-                order: 2;
             }
             
             .job-description {
                 color: beige;
-                margin: 2em;
             }
             
             .job-times {

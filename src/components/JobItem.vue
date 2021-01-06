@@ -33,6 +33,7 @@
       </div>
       <div class="job-edit">
         <button class="job-edit-button" @click="createEditModal">Edit</button>
+        <button class="job-edit-button" @click="cdeleteJob">Delete</button>
       </div>
     </div>
   </div>
@@ -66,10 +67,15 @@ export default {
         month: "numeric",
         day: "numeric",
       };
-      return this.job.startDate.toLocaleDateString(
-        navigator.languages[0],
-        options
-      );
+      try {
+        return this.job.startDate.toLocaleDateString(
+          navigator.languages[0],
+          options
+        );
+      } catch (err) {
+        console.log('Error converting startDate to localeDateString', this.job)
+        return 'error...'
+      }
     },
     workTime() {
       const millisec = this.job.endDate - this.job.startDate;
@@ -132,6 +138,9 @@ export default {
     toggleLower() {
       this.lowerOpen = !this.lowerOpen;
     },
+    deleteJob() {
+      this.$store.dispatch("deleteJob", this.job.id)
+    }
   },
 };
 </script>

@@ -46,7 +46,7 @@ const store = createStore({
       state.showEditModal = false;
     },
     setEditingJob(state, job) {
-      state.editingJob = job;
+      state.editingJob = {...job};
     },
     // For editing form
     editTitle(state, title) {
@@ -117,34 +117,36 @@ const store = createStore({
           });
         });
     },
-    editJob(context, job) {
-      console.log(job);
+    editJob(context) {
+      const job = this.getters.editingJob
       job.startDate = firebase.firestore.Timestamp.fromDate(job.startDate);
       job.endDate = firebase.firestore.Timestamp.fromDate(job.endDate);
-      if ("id" in job.keys()) {
+      if ("id" in job) {
         // Update job
         const jobID = job.id;
         delete job.id;
         dbUsers
-          .doc(context.getters.user.uid)
-          .collection("jobs")
-          .doc(jobID)
-          .set(job);
+        .doc(context.getters.user.uid)
+        .collection("jobs")
+        .doc(jobID)
+        .set(job);
       } else {
         // New job
         dbUsers
-          .doc(this.user.uid)
-          .collection("jobs")
-          .add(job);
-      }
-
-      dbUsers
         .doc(context.getters.user.uid)
         .collection("jobs")
-        .doc();
-      this.editingJob = job;
+        .add(job);
+      }
+      console.log('Job submitted');
       //this.$bvModal.show("edit-modal");
     },
+    deleteJob(context, id) {
+      dbUsers
+      .doc(context.getters.user.uid)
+      .collection("jobs")
+      .doc(id)
+      .delete();
+    }
   },
 });
 

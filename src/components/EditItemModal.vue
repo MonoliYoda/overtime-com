@@ -120,7 +120,7 @@ export default {
     title: {
       get() {
         try {
-          return this.$store.editingJob.title;
+          return this.$store.state.editingJob.title;
         } catch {
           return "";
         }
@@ -132,7 +132,7 @@ export default {
     employer: {
       get() {
         try {
-          return this.$store.editingJob.employer;
+          return this.$store.state.editingJob.employer;
         } catch (err) {
           return "";
         }
@@ -144,7 +144,7 @@ export default {
     description: {
       get() {
         try {
-          return this.$store.editingJob.description;
+          return this.$store.state.editingJob.description;
         } catch (err) {
           return "";
         }
@@ -156,7 +156,7 @@ export default {
     startDate: {
       get() {
         try {
-          return this.$store.editingJob.startDate
+          return this.$store.state.editingJob.startDate
             .toISOString()
             .substring(0, 16);
         } catch {
@@ -170,7 +170,7 @@ export default {
     endDate: {
       get() {
         try {
-          return this.$store.editingJob.endDate.toISOString().substring(0, 16);
+          return this.$store.state.editingJob.endDate.toISOString().substring(0, 16);
         } catch {
           return "";
         }
@@ -182,7 +182,7 @@ export default {
     dailyRate: {
       get() {
         try {
-          return this.$store.editingJob.dailyRate;
+          return this.$store.state.editingJob.dailyRate;
         } catch (err) {
           return "";
         }
@@ -194,7 +194,7 @@ export default {
     workdayHours: {
       get() {
         try {
-          return this.$store.editingJob.workdayHours;
+          return this.$store.state.editingJob.workdayHours;
         } catch (err) {
           return "";
         }
@@ -205,9 +205,6 @@ export default {
     },
   },
   methods: {
-    data() {
-      return {};
-    },
     close() {
       this.$store.commit("hideEditModal");
       this.$store.commit("setEditingJob", {});
@@ -215,7 +212,7 @@ export default {
     submit() {
       this.$store.commit("hideEditModal");
       // Validation
-      this.$store.dispatch("editJob", this.job);
+      this.$store.dispatch("editJob");
     },
     strfyDateTime(datetime) {
       try {

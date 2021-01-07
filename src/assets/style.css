@@ -1,4 +1,13 @@
                                 /* Fonts stuff*/
+                                /* active job*/
+                                
+                                .active-jobs {
+                                    background-color: beige
+                                }
+                                
+                                .prev-jobs {
+                                    background-color: blueviolet;
+                                }
                                 /*jobitem* for desktop */
                                 /* job item for mobile*/
                                 

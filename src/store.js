@@ -49,7 +49,9 @@ const store = createStore({
       state.showEditModal = false;
     },
     setEditingJob(state, job) {
-      state.editingJob = {...job};
+      state.editingJob = {...job}
+      state.editJob.startDate = job.startDate.toISOString().substring(0, 16)
+      state.editJob.endDate = job.endDate.toISOString().substring(0, 16)
     },
     // For editing form
     editTitle(state, title) {
@@ -122,8 +124,8 @@ const store = createStore({
     },
     editJob(context) {
       const job = this.getters.editingJob
-      job.startDate = firebase.firestore.Timestamp.fromDate(job.startDate);
-      job.endDate = firebase.firestore.Timestamp.fromDate(job.endDate);
+      job.startDate = firebase.firestore.Timestamp.fromDate(new Date(job.startDate));
+      job.endDate = firebase.firestore.Timestamp.fromDate(new Date(job.endDate));
       if ("id" in job) {
         // Update job
         const jobID = job.id;

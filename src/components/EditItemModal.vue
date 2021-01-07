@@ -156,27 +156,25 @@ export default {
     startDate: {
       get() {
         try {
-          return this.$store.state.editingJob.startDate
-            .toISOString()
-            .substring(0, 16);
+          return this.$store.state.editingJob.startDate;
         } catch {
           return "";
         }
       },
       set(val) {
-        this.$store.commit("editStartDate", Date.parse(val));
+        this.$store.commit("editStartDate", val);
       },
     },
     endDate: {
       get() {
         try {
-          return this.$store.state.editingJob.endDate.toISOString().substring(0, 16);
+          return this.$store.state.editingJob.endDate;
         } catch {
           return "";
         }
       },
       set(val) {
-        this.$store.commit("editEndDate", Date.parse(val));
+        this.$store.commit("editEndDate", val);
       },
     },
     dailyRate: {

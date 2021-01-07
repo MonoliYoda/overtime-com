@@ -1,5 +1,7 @@
 /* Fonts stuff*/
 
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 /* active job*/
 
@@ -13,10 +15,26 @@
     width: 158px;
     height: 32px;
     text-align: center;
+    padding-top: 5px;
 }
 
 .tag p {
     margin: auto;
+}
+
+.filter-tag-space {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.filter-tag {
+    background-color: #5d6366;
+    width: 158px;
+    height: 32px;
+    text-align: center;
+    padding-top: 5px;
 }
 
 
@@ -32,8 +50,6 @@
 
 .job-card-up {
     background-color: #252d40;
-    border-style: solid;
-    border-width: 2px;
     margin-left: 2em;
     margin-right: 2em;
     display: flex;
@@ -43,6 +59,9 @@
     padding: 10px;
     justify-content: space-around;
     flex-basis: auto;
+    box-shadow: 16px 16px 15px #00000066;
+    border-radius: 4px;
+    border: none;
 }
 
 .job-card-down {
@@ -58,8 +77,6 @@
     max-height: 0px;
     transition: 1s;
     visibility: hidden;
-    border-style: solid;
-    border-width: 2px;
 }
 
 .open {
@@ -86,6 +103,8 @@ body {
     color: #D2D5DA;
     margin-left: 1em;
     margin-right: 1em;
+    min-width: 300px;
+    font-family: 'Poppins', sans-serif;
 }
 
 
@@ -99,13 +118,34 @@ body {
 
 .add-job-button {
     background-color: #146281;
-    display: flex;
+    color: #d2d5da;
     margin: 2rem;
     padding: 12px 28px;
     box-shadow: 16px 16px 15px #00000066;
     border-radius: 4px;
     border: none;
+    opacity: 0.8;
+    transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.add-job-button:active {
+    opacity: 1
+}
+
+.job-edit-button {
+    background-color: #146281;
+    padding: 12px 28px;
+    margin: 1em;
+    box-shadow: 16px 16px 15px #00000066;
+    border-radius: 4px;
+    border: none;
     opacity: 0.6;
+    transition: 0.3s;
+}
+
+.job-edit-button:active {
+    opacity: 1;
 }
 
 
@@ -119,7 +159,7 @@ body {
 
 nav {
     background: black;
-    padding: 5px 20px;
+    padding: 3px 20px;
 }
 
 ul {
@@ -127,7 +167,7 @@ ul {
 }
 
 a {
-    color: white;
+    color: #d2d5da;
     text-decoration: none;
 }
 
@@ -136,7 +176,7 @@ a:hover {
 }
 
 .menu li {
-    font-size: 16px;
+    font-size: 18px;
     padding: 15px 5px;
 }
 
@@ -156,6 +196,7 @@ a:hover {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Poppins', sans-serif;
 }
 
 .toggle {
@@ -299,7 +340,7 @@ a:hover {
         flex-direction: row;
     }
     .open {
-        max-height: 50px;
+        max-height: 100px;
         transition: 1s;
         visibility: visible;
     }

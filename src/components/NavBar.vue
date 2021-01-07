@@ -1,11 +1,11 @@
 <template>
     <nav>
     <ul class="menu">
-        <li class="logo"><a>Overtime</a></li>
+        <li class="logo"><a>OVERTIME</a></li>
         <li class="item" :class="{active: menuActive}"><input type="text"></li>
         <li class="item" :class="{active: menuActive}"><a>Search</a></li>
         <li class="item" :class="{active: menuActive}"><a>Settings</a></li>
-        <li class="item button secondary" :class="{active: menuActive}"><a @click="onLogin">Login</a></li>
+        <li class="item job-edit-button" :class="{active: menuActive}"><a @click="onLogin">Login</a></li>
         <li class="toggle" @click="toggleMenu"><span class="bars"></span></li>
     </ul>
 

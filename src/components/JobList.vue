@@ -4,6 +4,9 @@
       <p>PREVIOUS JOBS</p>
     </div>
     <!-- Buttons -->
+    <div class="filter-tag-space">
+      <div class="filter-tag">filters</div>
+    </div>
     <JobItem v-for="job in jobs" :key="job.id" :job="job" />
   </div>
 </template>

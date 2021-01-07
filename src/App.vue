@@ -7,6 +7,7 @@
       <div class="add-job-space">
         <button class="add-job-button" @click="showModal">Add Job</button>
       </div>
+      
 
       <!-- Opt: ActiveJob -->
       <router-view name="activejob"></router-view>

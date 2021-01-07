@@ -50,8 +50,12 @@ const store = createStore({
     },
     setEditingJob(state, job) {
       state.editingJob = {...job}
-      state.editJob.startDate = job.startDate.toISOString().substring(0, 16)
-      state.editJob.endDate = job.endDate.toISOString().substring(0, 16)
+      try {
+        state.editJob.startDate = job.startDate.toISOString().substring(0, 16)
+        state.editJob.endDate = job.endDate.toISOString().substring(0, 16)
+      } catch (err) {
+        return
+      }
     },
     // For editing form
     editTitle(state, title) {
@@ -112,11 +116,11 @@ const store = createStore({
           col.forEach((doc) => {
             const data = doc.data();
             data.startDate = data.startDate.toDate();
-            data.endDate = data.endDate.toDate();
             data.id = doc.id;
             if (data.endDate == null) {
               context.commit("pushActiveJob", data);
             } else {
+              data.endDate = data.endDate.toDate();
               context.commit("pushJob", data);
             }
           });
@@ -126,7 +130,14 @@ const store = createStore({
       const job = this.getters.editingJob
       job.startDate = firebase.firestore.Timestamp.fromDate(new Date(job.startDate));
       job.endDate = firebase.firestore.Timestamp.fromDate(new Date(job.endDate));
+      console.log(job.startDate)
+      if (isNaN(job.endDate.seconds)) {
+        // Active job
+        delete job.endDate
+      }
+      console.log('Here')
       if ("id" in job) {
+        console.log('Existing job.')
         // Update job
         const jobID = job.id;
         delete job.id;
@@ -136,7 +147,9 @@ const store = createStore({
         .doc(jobID)
         .set(job).then(() => {
           job.startDate = job.startDate.toDate();
-          job.endDate = job.endDate.toDate();
+          if (job.endDate) {
+            job.endDate = job.endDate.toDate();
+          }
           const jobs = [...context.getters.jobs]
           const idx = jobs.findIndex((job) => job.id == jobID)
           job.id = jobID
@@ -145,17 +158,22 @@ const store = createStore({
         });
       } else {
         // New job
+        console.log('New job')
         dbUsers
         .doc(context.getters.user.uid)
         .collection("jobs")
         .add(job).then(docRef => {
+          console.log('Added wtih docRef:', docRef)
           job.startDate = job.startDate.toDate();
-          job.endDate = job.endDate.toDate();
+          if (job.endDate) {
+            job.endDate = job.endDate.toDate();
+          }
           job.id = docRef.id
           context.commit('pushJob', job)
         });
       }
       console.log('Job submitted');
+      context.commit('setEditingJob', {})
       //this.$bvModal.show("edit-modal");
     },
     deleteJob(context, id) {

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div class="prev-jobs">
-      <h1>Previous jobs</h1>
+  <div class="jobs-list">
+    <div class="tag">
+      <p>PREVIOUS JOBS</p>
     </div>
     <!-- Buttons -->
     <JobItem v-for="job in jobs" :key="job.id" :job="job" />

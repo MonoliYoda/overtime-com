@@ -1,9 +1,12 @@
 <template>
-  <div class="active-jobs">
+  <div class="jobs-list">
+    <div class="tag">
+      <p>ACTIVE JOBS</p>
+    </div>
     <div v-if="activeJobs.length != 0">
       <JobItem v-for="job in activeJobs" :key="job.id" :job="job" />
     </div>
-    <div v-else>
+    <div v-else class=job-card-up>
       <h1>No Active Jobs.</h1>
     </div>
   </div>

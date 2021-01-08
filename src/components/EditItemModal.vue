@@ -7,15 +7,12 @@
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
       >
-        <header class="modal-header" id="modalTitle">
-          <slot name="header">
-          </slot>
-        </header>
+        
         <section class="modal-body" id="modalDescription">
           <slot name="body">
-            <form action="">
-              <div>
-                <label for="name">Project name:</label>
+            <form  class="form" action="">
+              <div class="form-labels">
+                <label for="name">Project:</label>
                 <label for="employer">Producer:</label>
                 <label for="notes">Notes:</label>
                 <label for="rate">Daily rate:</label>
@@ -23,7 +20,7 @@
                 <label for="startdate">Start date:</label>
                 <label for="enddate">End date:</label>
               </div>
-              <div>
+              <div class="form-inputs">
                 <input id="name" name="name" type="text" v-model="title" />
                 <input
                   id="employer"
@@ -204,6 +201,9 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -221,34 +221,52 @@ export default {
   color: #D2D5DA;
   box-shadow: 2px 2px 20px 20px #00000066;
   min-width: 300px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .modal-header,
 .modal-footer {
-  padding: 15px;
   display: flex;
-}
-
-.modal-header {
-  border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
-  justify-content: space-between;
-}
-
-.modal-footer {
-  border-top: 1px solid #eeeeee;
   justify-content: flex-end;
 }
 
+
+
 .modal-body {
-  padding: 20px 10px;
+  padding: 20px 10px 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.form {
+  display: flex;
+}
+
+.form-labels {
+  display: flex;
+  flex-direction:column;
+  padding-right: 3px;
+}
+
+.form-labels label {
+  height: 24px;
+  margin: 2px 0px 2px 0px;
+  text-align: right;
+}
+
+.form-inputs {
   display: flex;
   flex-direction: column;
 }
 
-.form-control {
-  display: flex;
-  flex-direction: row;
+.form-inputs input {
+  height: 24px;
+  margin: 2px 0px 2px 0px;
+  background-color: rgb(71, 71, 71);
+  color: #D2D5DA;
 }
 
 /* Modal animations */

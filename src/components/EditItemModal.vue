@@ -9,16 +9,6 @@
       >
         <header class="modal-header" id="modalTitle">
           <slot name="header">
-            This is the default tile!
-
-            <button
-              type="button"
-              class="btn-close"
-              @click="close"
-              aria-label="Close modal"
-            >
-              x
-            </button>
           </slot>
         </header>
         <section class="modal-body" id="modalDescription">
@@ -89,7 +79,7 @@
           <slot name="footer">
             <button
               type="button"
-              class="btn-green"
+              class="job-edit-button"
               @click="close"
               aria-label="Close modal"
             >
@@ -97,7 +87,7 @@
             </button>
             <button
               type="button"
-              class="btn-green"
+              class="job-edit-button"
               @click="submit"
               aria-label="Close modal"
             >
@@ -237,11 +227,9 @@ export default {
 }
 
 .modal {
-  background: #ffffff;
-  box-shadow: 2px 2px 20px 1px;
-  overflow-x: auto;
-  display: flex;
-  flex-direction: column;
+  background:  #141a26;
+  color: #D2D5DA;
+  box-shadow: 2px 2px 20px 20px #00000066;
   min-width: 300px;
 }
 
@@ -263,26 +251,16 @@ export default {
 }
 
 .modal-body {
-  position: relative;
   padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.btn-close {
-  border: none;
-  font-size: 20px;
-  padding: 0px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #4aae9b;
-  background: transparent;
+.form-control {
+  display: flex;
+  flex-direction: row;
 }
 
-.btn-green {
-  color: white;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
-  border-radius: 2px;
-}
 /* Modal animations */
 .fade-enter-active,
 .fade-leave-active {

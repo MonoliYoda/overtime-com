@@ -1,16 +1,16 @@
 <template>
-  <div class=job-card-space @click="toggleLower">
+  <div class=job-card-space>
     <div class="job-card-up">
-      <div class="job-title">
+      <div class="job-title" @click="this.$store.dispatch('setFilter', {type: 'title', value: job.title})">
         <h4>{{ job.title }}</h4>
       </div>
-      <div class="job-employer">
+      <div class="job-employer" @click="this.$store.dispatch('setFilter', {type: 'employer', value: job.employer})">
         <h4>{{ job.employer }}</h4>
       </div >
       <div class="job-date">
       <h4>{{ jobDate }}</h4>
       </div >
-      <div class="job-arrow">
+      <div class="job-arrow" @click="toggleLower">
         <p> <i class="arrow"></i></p>
       </div>
     </div>
@@ -56,7 +56,7 @@ export default {
   props: ["job"],
   data() {
     return {
-      lowerOpen: true, // default state
+      lowerOpen: false, // default state
     };
   },
   computed: {

@@ -2,14 +2,17 @@ import { createStore } from "vuex";
 import fb from "./firebase/firebaseInit";
 import firebase from "firebase";
 
+
 const dbUsers = fb.firestore().collection("users");
 
 const store = createStore({
   state() {
     return {
       fb: fb,
+      filters: {title: null, employer: null},
       jobs: [],
       activeJobs: [],
+      filteredJobs: [],
       showEditModal: false,
       editingJob: {},
       settings: {
@@ -36,6 +39,12 @@ const store = createStore({
     pushActiveJob(state, job) {
       state.activeJobs.push(job);
     },
+    setActiveJobs(state, jobs) {
+      state.activeJobs = jobs
+    },
+    setFilteredJobs(state, jobs) {
+      state.filteredJobs = jobs
+    },
     setUser(state, user) {
       state.user = user;
     },
@@ -56,6 +65,9 @@ const store = createStore({
       } catch (err) {
         return
       }
+    },
+    setFilter(state, filter) {
+      state.filters[filter.type] = filter.value
     },
     // For editing form
     editTitle(state, title) {
@@ -90,6 +102,9 @@ const store = createStore({
     activeJobs(state) {
       return state.activeJobs;
     },
+    filteredJobs(state) {
+      return state.filteredJobs;
+    },
     user(state) {
       return state.user;
     },
@@ -102,6 +117,9 @@ const store = createStore({
     editingJob(state) {
       return state.editingJob;
     },
+    filters(state) {
+      return state.filters
+    }
   },
   actions: {
     fetchJobs(context) {
@@ -124,20 +142,18 @@ const store = createStore({
               context.commit("pushJob", data);
             }
           });
-        });
+        }).then(() => context.commit('setFilteredJobs', context.getters.jobs));
+        
     },
     editJob(context) {
       const job = this.getters.editingJob
       job.startDate = firebase.firestore.Timestamp.fromDate(new Date(job.startDate));
       job.endDate = firebase.firestore.Timestamp.fromDate(new Date(job.endDate));
-      console.log(job.startDate)
       if (isNaN(job.endDate.seconds)) {
         // Active job
         delete job.endDate
       }
-      console.log('Here')
       if ("id" in job) {
-        console.log('Existing job.')
         // Update job
         const jobID = job.id;
         delete job.id;
@@ -146,38 +162,51 @@ const store = createStore({
         .collection("jobs")
         .doc(jobID)
         .set(job).then(() => {
+          job.id = jobID
           job.startDate = job.startDate.toDate();
           if (job.endDate) {
             job.endDate = job.endDate.toDate();
           }
           const jobs = [...context.getters.jobs]
           const idx = jobs.findIndex((job) => job.id == jobID)
-          job.id = jobID
-          jobs[idx] = job
-          context.commit('setJobs', jobs)
+          if (idx == -1) {
+            // Not in completed jobs, need to check in active..
+            const jobs2 = [...context.getters.activeJobs]
+            const idx2 = jobs2.findIndex((job) => job.id == jobID)
+            // Delete from active jobs
+            jobs2.splice(idx2, 1)
+            context.commit('setActiveJobs', jobs2)
+            // Add to completed jobs
+            context.commit('pushJob', job)
+          } else {
+            // Found in completed, just need to update
+            jobs[idx] = job
+            context.commit('setJobs', jobs)
+          }
         });
       } else {
         // New job
-        console.log('New job')
         dbUsers
         .doc(context.getters.user.uid)
         .collection("jobs")
         .add(job).then(docRef => {
           console.log('Added wtih docRef:', docRef)
           job.startDate = job.startDate.toDate();
+          job.id = docRef.id
           if (job.endDate) {
             job.endDate = job.endDate.toDate();
+            context.commit('pushJob', job)
+          } else {
+            context.commit('pushActiveJob', job)
           }
-          job.id = docRef.id
-          context.commit('pushJob', job)
         });
       }
       console.log('Job submitted');
       context.commit('setEditingJob', {})
+      context.dispatch('fetchJobs')
       //this.$bvModal.show("edit-modal");
     },
     deleteJob(context, id) {
-      console.log('Deleting', context.getters.user.uid, id)
       dbUsers
       .doc(context.getters.user.uid)
       .collection("jobs")
@@ -185,8 +214,29 @@ const store = createStore({
       .delete().then(() => {
         const jobs = [...context.getters.jobs]
         const idx = jobs.findIndex((job) => job.id == id)
-        context.commit('setJobs', jobs.splice(idx, 1))
+        jobs.splice(idx, 1)
+        context.commit('setJobs', jobs)
       });
+      context.dispatch('fetchJobs')
+    },
+    setFilter(context, filter) {
+      context.commit('setFilter', filter)
+      context.dispatch('filterJobs')
+    },
+    filterJobs(context) {
+      var joblist = [...context.getters.jobs]
+      const filters = context.getters.filters
+      if (filters.title) {
+        joblist = joblist.filter(job => {
+          return job.title === filters.title ? true : false
+        })
+      }
+      if (filters.employer) {
+        joblist = joblist.filter(job => {
+          return job.employer === filters.employer ? true : false
+        })
+      }
+      context.commit('setFilteredJobs', joblist)
     }
   },
 });

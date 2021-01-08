@@ -14,57 +14,47 @@
         <section class="modal-body" id="modalDescription">
           <slot name="body">
             <form action="">
-              <div class="form-control">
+              <div>
                 <label for="name">Project name:</label>
-                <input id="name" name="name" type="text" v-model="title" />
-              </div>
-              <div class="form-control">
                 <label for="employer">Producer:</label>
+                <label for="notes">Notes:</label>
+                <label for="rate">Daily rate:</label>
+                <label for="hours">Day hours:</label>
+                <label for="startdate">Start date:</label>
+                <label for="enddate">End date:</label>
+              </div>
+              <div>
+                <input id="name" name="name" type="text" v-model="title" />
                 <input
                   id="employer"
                   name="employer"
                   type="text"
                   v-model="employer"
                 />
-              </div>
-              <div class="form-control">
-                <label for="notes">Notes:</label>
                 <input
                   id="notes"
                   name="notes"
                   type="text"
                   v-model="description"
                 />
-              </div>
-              <div class="form-control">
-                <label for="rate">Daily rate:</label>
                 <input
                   id="rate"
                   name="rate"
                   type="number"
                   v-model="dailyRate"
                 />
-              </div>
-              <div class="form-control">
-                <label for="hours">Day hours:</label>
                 <input
                   id="hours"
                   name="hours"
                   type="number"
                   v-model="workdayHours"
                 />
-              </div>
-              <div class="form-control">
-                <label for="startdate">Start date:</label>
                 <input
                   id="startdate"
                   name="startdate"
                   type="datetime-local"
                   v-model="startDate"
                 />
-              </div>
-              <div class="form-control">
-                <label for="enddate">End date:</label>
                 <input
                   id="enddate"
                   name="enddate"

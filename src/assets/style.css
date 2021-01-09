@@ -1,6 +1,19 @@
 /* Fonts stuff*/
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo&family=Exo+2&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo&family=Exo+2&family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=B612&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap');
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Hachi Maru Pop', sans-serif;
+}
+
 
 /* active job*/
 
@@ -108,7 +121,6 @@ body {
     margin-left: 1em;
     margin-right: 1em;
     min-width: 350px;
-    font-family: 'Poppins', sans-serif;
 }
 
 .button {
@@ -121,7 +133,6 @@ body {
     border: none;
     opacity: 0.8;
     transition: 0.3s;
-    font-family: 'Poppins', sans-serif;
 }
 
 .button:active {
@@ -130,12 +141,6 @@ body {
 
 
 /*NavBar*/
-
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
 
 nav {
     background: black;
@@ -176,7 +181,6 @@ a:hover {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Poppins', sans-serif;
 }
 
 .toggle {
@@ -364,7 +368,6 @@ a:hover {
     color: #D2D5DA;
     box-shadow: 2px 2px 20px 20px #00000066;
     min-width: 300px;
-    font-family: 'Poppins', sans-serif;
 }
 
 .modal-header,

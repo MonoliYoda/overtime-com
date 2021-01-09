@@ -9,6 +9,7 @@
     margin-bottom: 2em;
 }
 
+
 /*add job button*/
 
 .add-job-space {
@@ -16,6 +17,9 @@
     align-items: center;
     display: flex;
 }
+
+
+/* active previous job tag*/
 
 .tag {
     background-color: #042335;
@@ -39,10 +43,7 @@
 .tag.filter {
     background-color: #5d6366;
     margin: 0 5px 0 5px;
- 
 }
-
-/*jobitem* for desktop */
 
 
 /* job item for mobile*/
@@ -54,8 +55,6 @@
 
 .job-card {
     background-color: #252d40;
-    margin-left: 2em;
-    margin-right: 2em;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -63,6 +62,7 @@
     display: flex;
     box-shadow: 16px 16px 15px #00000066;
 }
+
 .job-card.up {
     flex-basis: auto;
     border-radius: 4px;
@@ -106,12 +106,10 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-
-
 .button {
     background-color: #146281;
     color: #d2d5da;
-    margin: 2rem;
+    margin: 1rem;
     padding: 12px 28px;
     box-shadow: 10px 10px 15px #00000066;
     border-radius: 4px;
@@ -124,6 +122,7 @@ body {
 .button:active {
     opacity: 1
 }
+
 
 /*NavBar*/
 
@@ -268,6 +267,15 @@ a:hover {
         margin-left: 2em;
         margin-right: 2em;
     }
+    .job-card {
+        flex-direction: row;
+    }
+    .details {
+        margin: 0 1em;
+    }
+    .details p {
+        margin: 1em 0;
+    }
 }
 
 
@@ -275,8 +283,8 @@ a:hover {
 
 @media all and (min-width: 768px) {
     .content {
-        margin-left: 5em;
-        margin-right: 5em;
+        margin-left: 10%;
+        margin-right: 10%;
     }
     .item {
         display: block;
@@ -316,4 +324,85 @@ a:hover {
         transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
     }
+    .details {
+        margin: 0 1em;
+    }
+}
+
+
+/* MODAL */
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: #141a26;
+    color: #D2D5DA;
+    box-shadow: 2px 2px 20px 20px #00000066;
+    min-width: 300px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.modal-header,
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-body {
+    padding: 20px 10px 10px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+}
+
+.form-labels {
+    display: flex;
+    flex-direction: column;
+    padding-right: 3px;
+}
+
+.form-labels label {
+    height: 24px;
+    margin: 2px 0px 2px 0px;
+    text-align: right;
+}
+
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-inputs input {
+    height: 24px;
+    margin: 2px 0px 2px 0px;
+    background-color: rgb(71, 71, 71);
+    color: #D2D5DA;
+}
+
+
+/* Modal animations */
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.8s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }

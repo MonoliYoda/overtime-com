@@ -5,7 +5,7 @@
         <li class="item" :class="{active: menuActive}"><input type="text"></li>
         <li class="item" :class="{active: menuActive}"><a>Search</a></li>
         <li class="item" :class="{active: menuActive}"><a>Settings</a></li>
-        <li class="item job-edit-button" :class="{active: menuActive}"><a @click="onLogin">Login</a></li>
+        <li class="item button" :class="{active: menuActive}" style="margin: 0;"><a @click="onLogin">Login</a></li>
         <li class="toggle" @click="toggleMenu"><span class="bars"></span></li>
     </ul>
 

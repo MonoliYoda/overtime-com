@@ -1,21 +1,21 @@
 <template>
-  <div class=job-card-space>
-    <div class="job-card-up">
-      <div class="job-title" @click="this.$store.dispatch('setFilter', {type: 'title', value: job.title})">
+  <div class="job-card-space" @click="toggleLower">
+    <div class="job-card up">
+      <div class="job-title" @click.stop="this.$store.dispatch('setFilter', {type: 'title', value: job.title})">
         <h4>{{ job.title }}</h4>
       </div>
-      <div class="job-employer" @click="this.$store.dispatch('setFilter', {type: 'employer', value: job.employer})">
+      <div class="job-employer" @click.stop="this.$store.dispatch('setFilter', {type: 'employer', value: job.employer})">
         <h4>{{ job.employer }}</h4>
       </div >
       <div class="job-date">
       <h4>{{ jobDate }}</h4>
       </div >
-      <div class="job-arrow" @click="toggleLower">
+      <div class="job-arrow">
         <p> <i class="arrow"></i></p>
       </div>
     </div>
-
-    <div class=job-card-down :class="{open: lowerOpen}">  
+  
+    <div class="job-card down" :class="{open: lowerOpen}">  
       <div class="job-description">
         <p>{{ job.description }}</p>
       </div>
@@ -32,8 +32,8 @@
         <p>Overtime pay: {{ ovtPay }}</p>
       </div>
       <div class="job-edit">
-        <button class="job-edit-button" @click="createEditModal">Edit</button>
-        <button class="job-edit-button" @click="deleteJob">Delete</button>
+        <button class="button" @click.stop="createEditModal">Edit</button>
+        <button class="button" @click.stop="deleteJob">Delete</button>
       </div>
     </div>
   </div>

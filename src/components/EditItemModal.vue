@@ -66,7 +66,7 @@
           <slot name="footer">
             <button
               type="button"
-              class="job-edit-button"
+              class="button"
               @click="close"
               aria-label="Close modal"
             >
@@ -74,7 +74,7 @@
             </button>
             <button
               type="button"
-              class="job-edit-button"
+              class="button"
               @click="submit"
               aria-label="Close modal"
             >

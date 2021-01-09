@@ -4,8 +4,8 @@
     <NavBar />
     <!-- AddJobButton -->
     <div class="content">
-      <div class="add-job-space">
-        <button class="add-job-button" @click="showModal">Add Job</button>
+      <div class="subsection add-job-space">
+        <button class="button" @click="showModal">Add Job</button>
       </div>
       
 

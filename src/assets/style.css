@@ -84,6 +84,11 @@
     visibility: visible;
 }
 
+.job-arrow {
+    width: 0px;
+    text-align: center;
+}
+
 
 /* Background */
 
@@ -227,7 +232,7 @@ a:hover {
 
 /* Tablet menu */
 
-@media all and (min-width:468px) {
+@media all and (min-width:650px) {
     .menu {
         justify-content: center;
     }
@@ -276,6 +281,10 @@ a:hover {
     .details p {
         margin: 1em 0;
     }
+    .job-arrow {
+        width: 0px;
+        text-align: center;
+    }
 }
 
 
@@ -316,17 +325,23 @@ a:hover {
         transition: 1s;
         visibility: visible;
     }
-    .arrow {
-        border: solid beige;
-        border-width: 0 3px 3px 0;
-        display: inline-block;
-        padding: 3px;
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
+    .job-arrow {
+        width: 242px;
+        text-align: right;
     }
-    .details {
-        margin: 0 1em;
-    }
+}
+
+.arrow {
+    border: solid beige;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.details {
+    margin: 0 1em;
 }
 
 

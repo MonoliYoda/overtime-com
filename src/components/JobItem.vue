@@ -16,20 +16,20 @@
     </div>
   
     <div class="job-card down" :class="{open: lowerOpen}">  
-      <div class="details">
+      <div class="details" v-if="lowerOpen">
         <p>{{ job.description }}</p>
       </div>
-      <div class="details">
+      <div class="details" v-if="lowerOpen">
         <p>{{ workTime }}</p>
         
         <p>Overtime pct: {{ ovtPct }}%</p>
       </div>
-      <div class="details">
+      <div class="details" v-if="lowerOpen">
         <p>{{ overTime }}</p>
         
         <p>Overtime pay: {{ ovtPay }}</p>
       </div>
-      <div class="details">
+      <div class="details" v-if="lowerOpen">
         <button class="button" @click.stop="createEditModal">Edit</button>
         <button class="button" @click.stop="deleteJob">Delete</button>
       </div>

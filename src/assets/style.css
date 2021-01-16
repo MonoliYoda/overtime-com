@@ -87,14 +87,12 @@
     max-height: 0px;
     transition: 1s;
     padding: 0px 10px;
-    visibility: hidden;
 }
 
 .job-card.down.open {
     max-height: none;
     transition: 1s;
     padding: 10px;
-    visibility: visible;
 }
 
 .job-arrow {

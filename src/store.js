@@ -142,7 +142,11 @@ const store = createStore({
               context.commit("pushJob", data);
             }
           });
-        }).then(() => context.commit('setFilteredJobs', context.getters.jobs));
+        }).then(() => context.commit('setFilteredJobs', context.getters.jobs))
+        .catch((err) => {
+          console.log("Error fetching jobs.")
+          console.log(err)
+        });
         
     },
     editJob(context) {

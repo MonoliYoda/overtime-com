@@ -2,8 +2,12 @@
   <div>
     <!-- NavBar -->
     <NavBar />
+    <div class="content" v-if="!user">
+      <h2>Please Log In.</h2>
+    </div>
+
+    <div class="content" v-else>
     <!-- AddJobButton -->
-    <div class="content">
       <div class="subsection add-job-space">
         <button class="button" @click="showModal">Add Job</button>
       </div>
@@ -35,7 +39,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["showEditModal"]),
+    ...mapGetters(["showEditModal", "user"]),
   },
   methods: {
     // Move modal control to vuex

@@ -1,7 +1,7 @@
 <template>
     <nav>
     <ul class="menu">
-        <li class="logo"><a>OVERTIME</a></li>
+        <li class="logo"><a><img src="../assets/logo3.png"/></a></li>
         <li class="item" :class="{active: menuActive}"><input type="text"></li>
         <li class="item" :class="{active: menuActive}"><a>Search</a></li>
         <li class="item" :class="{active: menuActive}"><a>Settings</a></li>

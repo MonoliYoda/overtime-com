@@ -85,13 +85,13 @@
 .job-card.down {
     flex-wrap: wrap;
     max-height: 0px;
-    transition: 1s;
+    transition: 1s ease;
     padding: 0px 10px;
 }
 
 .job-card.down.open {
     max-height: none;
-    transition: 1s;
+    transition: all 1s ease;
     padding: 10px;
 }
 
@@ -129,12 +129,13 @@ body {
     box-shadow: 10px 10px 15px #00000066;
     border-radius: 4px;
     border: none;
-    opacity: 0.8;
+    opacity: 1;
     transition: 0.3s;
 }
 
 .button:active {
-    opacity: 1
+    opacity: 1;
+    background-color: #1d8db9;
 }
 
 
@@ -155,7 +156,8 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    cursor: default;
 }
 
 .menu li {
@@ -169,6 +171,10 @@ a:hover {
 
 .button.secondary {
     border-bottom: 1px #444 solid;
+}
+
+img {
+    height: 50px;
 }
 
 
@@ -264,7 +270,6 @@ a:hover {
         transition: all .25s;
     }
     .button:not(.secondary) a:hover {
-        background: #006d6d;
         border-color: #005959;
     }
     .button.secondary a:hover {
@@ -316,9 +321,7 @@ a:hover {
     .menu li {
         padding: 15px 10px;
     }
-    .menu li.button {
-        padding-right: 0;
-    }
+    .menu li.button {}
     .job-card {
         flex-direction: row;
     }

@@ -9,7 +9,7 @@
     <div class="content" v-else>
     <!-- AddJobButton -->
       <div class="subsection add-job-space">
-        <button class="button" @click="showModal">Add Job</button>
+        <button class="button" @click="showModal">ADD JOB</button>
       </div>
       
 
